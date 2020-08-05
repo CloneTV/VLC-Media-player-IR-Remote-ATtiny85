@@ -20,7 +20,9 @@
 - `ATtiny85` USB stick - 1 pcs.
 - `TL1838` IR Receiver Module - 1 pcs.  
 - [TrinketHidCombo Adafruit library](https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketHidCombo)  
-- IR Remote for PC only! tested on Windows 10.
+- [TrinketKeyboard Adafruit library](https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketKeyboard)  
+- `TrinketKeyboard` library required only for build [`IR Scanner`](https://github.com/CloneTV/VLC-Media-player-IR-Remote-ATtiny85-/blob/master/src/IR-Scanner-ATtiny85.ino) part.
+- IR Remote for **PC only**! tested on Windows 10.
 
 ## VLC advanced settings:
 

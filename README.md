@@ -15,16 +15,16 @@
 - menu,
 - exit full screen mode (ESC)
 
-## VLC advanced settings:
-
-![screenshot VLC settings](/docs/vlc-interfaces.png)
-
 ## Required:
 
 - `ATtiny85` USB stick - 1 pcs.
 - `TL1838` IR Receiver Module - 1 pcs.  
 - [TrinketHidCombo Adafruit library](https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketHidCombo)  
 - IR Remote for PC only! tested on Windows 10.
+
+## VLC advanced settings:
+
+![screenshot VLC settings](/docs/vlc-interfaces.png)
 
 ## LICENSE
 

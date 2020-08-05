@@ -1,37 +1,32 @@
-## Welcome to GitHub Pages
+# VLC/Media player IR Remote - homemade usb stick
 
-You can use the [editor on GitHub](https://github.com/CloneTV/VLC-Media-player-IR-Remote-ATtiny85-/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+ This project for `ATtiny85` USB stick + `TL1838` IR Receiver Module or compatible.  
+ The stick can be controlled from the `Skyline TV` remote control and others with a similar remote control, VLC player or standard Media Player on Windows 10.  
+ No software required for Windows 10 or special drivers.
+ 
+## Features and Capabilities:
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+- change player type: `VLC` or `Media player`,
+- `rewind` in both directions,
+- `previous`/`next` track,
+- `play`/`pause`/`stop`,
+- PAD support: `right`, `left`, `up`, `down`, `ok`
+- change volume,
+- menu,
+- exit full screen mode (`ESC`)
 
-### Markdown
+## Required:
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+- `ATtiny85` USB stick - 1 pcs.
+- `TL1838` IR Receiver Module - 1 pcs.  
+- [TrinketHidCombo Adafruit library](https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketHidCombo)  
+- IR Remote for PC only! tested on Windows 10.
 
-```markdown
-Syntax highlighted code block
+## VLC advanced settings:
 
-# Header 1
-## Header 2
-### Header 3
+![screenshot VLC settings](/docs/vlc-interfaces.png)
 
-- Bulleted
-- List
+## LICENSE
 
-1. Numbered
-2. List
+MIT
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/CloneTV/VLC-Media-player-IR-Remote-ATtiny85-/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.

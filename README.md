@@ -17,7 +17,7 @@
 
 ## VLC advanced settings:
 
-![screenshot VLC settings](vlc-interfaces.png)
+![screenshot VLC settings](/docs/vlc-interfaces.png)
 
 ## Required:
 

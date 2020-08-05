@@ -26,7 +26,7 @@
 
 ## VLC advanced settings:
 
-![screenshot VLC settings](https://clonetv.github.io/VLC-Media-player-IR-Remote-ATtiny85-/vlc-interfaces.png)
+![screenshot VLC settings](https://clonetv.github.io/VLC-Media-player-IR-Remote-ATtiny85/vlc-interfaces.png)
 
 ## LICENSE
 

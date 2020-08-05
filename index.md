@@ -6,16 +6,16 @@
  
 ## Features and Capabilities:
 
-- change player type: `VLC` or `Media player` (`BLUE` button),
 - `rewind` in both directions,
 - `previous`/`next` track,
 - `play`/`pause`/`stop`,
 - PAD support: `right`, `left`, `up`, `down`, `ok`
 - change volume,
 - menu,
+- change player type: `VLC` or `Media player` (`BLUE` button),
 - print screen (`YELLOW` button),
-- PC sleep (`RED` button),
 - PC wakeup (`GREEN` button),
+- PC sleep (`RED` button),
 - exit full screen mode (`ESC`)
 
 ## Required:

@@ -25,6 +25,7 @@
 - [TrinketHidCombo Adafruit library](https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketHidCombo)  
 - [TrinketKeyboard Adafruit library](https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketKeyboard)  
 - `TrinketKeyboard` library required only for build [`IR Scanner`](https://github.com/CloneTV/VLC-Media-player-IR-Remote-ATtiny85/blob/master/src/IR-Scanner-ATtiny85.ino) part.
+- No blame, diet [Adafruit all libraries](https://github.com/CloneTV/VLC-Media-player-IR-Remote-ATtiny85/raw/master/lib/Adafruit-Trinket-USB.7z)
 - IR Remote for **PC only**! tested on Windows 10.
 
 ## VLC advanced settings:

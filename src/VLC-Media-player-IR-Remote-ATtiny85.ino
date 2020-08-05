@@ -6,9 +6,22 @@
   Origin: 10.03.2016 Pawel A. Hernik
   Modify by ClontTv 05.08.2020
   Changed to work with VLC player and removed bugs 
-  https://clonetv.github.io/VLC-Media-player-IR-Remote-ATtiny85-/
-  
-  To use the standard Windows 10 media player, press BLUE button: 
+  https://clonetv.github.io/VLC-Media-player-IR-Remote-ATtiny85/
+
+  Features and Capabilities:
+
+  - rewind in both directions,
+  - previous/next track,
+  - play/pause/stop,
+  - PAD support: right, left, up, down, ok
+  - change volume,
+  - menu - Menu button,
+  - change player type: VLC or standard Windows 10 Media player - BLUE button (VLC default),
+  - print screen - YELLOW button,
+  - PC sleep - RED button,
+  - PC wakeup - GREEN button,
+  - exit full screen mode (ESC)
+
 */
 
 #include <TrinketHidCombo.h>
@@ -50,11 +63,10 @@ bool isLedLight = false,
 #define IR_RIGHT 0xC13EF48B
 #define IR_UP    0xC13EF887
 #define IR_DOWN  0xC13EEC93
-#define IR_RED   0xC13EE1
-#define IR_GREEN 0xC13EE2
-#define IR_YELLOW 0xC13EE3
-#define IR_BLUE  0xC13EE4
-
+#define IR_RED   0xC13ECEB1
+#define IR_GREEN 0xC13EEE91
+#define IR_YELLOW 0xC13EDEA1
+#define IR_BLUE  0xC13EFE81
 
 void setup() {
   pinMode(LEDpin, OUTPUT);
@@ -166,6 +178,33 @@ void loop()
     case IR_OK: {
       if(repeat) {
         TrinketHidCombo.pressKey(0,KEYCODE_SPACE);
+        TrinketHidCombo.pressKey(0,0); 
+      }
+      break;
+    }
+    case IR_BLUE: {
+      if(repeat) {
+        isVlcPlayer = !isVlcPlayer;
+      }
+      break;
+    }
+    case IR_YELLOW: {
+      if(repeat) {
+        TrinketHidCombo.pressKey(0,KEYCODE_PRINTSCREEN);
+        TrinketHidCombo.pressKey(0,0); 
+      }
+      break;
+    }
+    case IR_RED: {
+      if(repeat) {
+        TrinketHidCombo.pressKey(0,SYSCTRLKEY_SLEEP);
+        TrinketHidCombo.pressKey(0,0); 
+      }
+      break;
+    }
+    case IR_GREEN: {
+      if(repeat) {
+        TrinketHidCombo.pressKey(0,SYSCTRLKEY_WAKE);
         TrinketHidCombo.pressKey(0,0); 
       }
       break;

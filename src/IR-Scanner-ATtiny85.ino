@@ -4,7 +4,7 @@
   TrinketKeyboard library: https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketKeyboard
 
   ClontTv 05.08.2020
-  https://clonetv.github.io/VLC-Media-player-IR-Remote-ATtiny85-/
+  https://clonetv.github.io/VLC-Media-player-IR-Remote-ATtiny85/
 */
 
 #include <TrinketKeyboard.h>

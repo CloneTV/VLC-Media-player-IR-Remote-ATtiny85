@@ -13,7 +13,7 @@
 - PAD support: `right`, `left`, `up`, `down`, `ok`
 - change volume,
 - menu,
-- exit full screen mode (ESC)
+- exit full screen mode (`ESC`)
 
 ## Required:
 

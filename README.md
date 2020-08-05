@@ -22,7 +22,7 @@
 - [TrinketHidCombo Adafruit library](https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketHidCombo)  
 - [TrinketKeyboard Adafruit library](https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketKeyboard)  
 - `TrinketKeyboard` library required only for build [`IR Scanner`](/blob/master/src/IR-Scanner-ATtiny85.ino) part.
-- IR Remote for PC only! tested on Windows 10.
+- IR Remote for **PC only**! tested on Windows 10.
 
 ## VLC advanced settings:
 

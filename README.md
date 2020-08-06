@@ -27,6 +27,10 @@
 - `TrinketKeyboard` library required only for build [`IR Scanner`](https://github.com/CloneTV/VLC-Media-player-IR-Remote-ATtiny85/blob/master/src/IR-Scanner-ATtiny85.ino) part.
 - IR Remote for **PC only**! tested on Windows 10.
 
+## Skyline TV remote:
+
+![screenshot Skyline remote](https://clonetv.github.io/VLC-Media-player-IR-Remote-ATtiny85/remote-skyline.png)
+
 ## VLC advanced settings:
 
 ![screenshot VLC settings](https://clonetv.github.io/VLC-Media-player-IR-Remote-ATtiny85/vlc-interfaces.png)

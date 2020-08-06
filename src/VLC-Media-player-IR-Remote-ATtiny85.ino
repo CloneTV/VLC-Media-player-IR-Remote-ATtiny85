@@ -1,5 +1,5 @@
 /*
-  VLC/Media player IR Remote for PC (Windows 10)
+  VLC/Media player IR Remote for PC (Windows 10/Linux)
   Project for ATtiny85 USB stick + TL1838 IR Receiver Module
   TrinketHidCombo library: https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketHidCombo
 
@@ -27,6 +27,7 @@
 #include <TrinketHidCombo.h>
 
 #define BUILD_SOUND_CTRL 1
+#define BUILD_LED_BLINK 1
 
 #define IRpin_PIN PINB
 #define IRpin 2
@@ -46,8 +47,10 @@ uint16_t pulse = 0,
 uint32_t irCode = 0U,
          irCodeLast = 0U;
 unsigned long lastPress = 0UL;
-bool isLedLight = false,
-     isVlcPlayer = true;
+bool isVlcPlayer = true;
+#if defined(BUILD_LED_BLINK)
+bool isLedLight = false;
+#endif
 
 #define IR_MUTE  0xC13EF28D
 #define IR_VOLUP 0xC13EF00F
@@ -79,7 +82,9 @@ void setup() {
 void loop()
 {
   TrinketHidCombo.poll();
+#if defined(BUILD_LED_BLINK)
   isLedLight = true;
+#endif
 
   uint16_t numpulse = listenForIR();
   for (int i = 0; i < 32; i++) {
@@ -214,15 +219,19 @@ void loop()
       break;
     }
     default: {
+#     if defined(BUILD_LED_BLINK)
       if (digitalRead(LEDpin))
         isLedLight = false;
+#     endif
       break;
     }
   }
+#if defined(BUILD_LED_BLINK)
   if (isLedLight)
     digitalWrite(LEDpin, true);
   else
     digitalWrite(LEDpin, false);
+#endif
 
   irCodeLast = irCode;
   lastPress = millis();
@@ -236,7 +245,9 @@ uint16_t listenForIR() {
   while (true) {
     uint32_t hp = 0U, lp = 0U;
     while (IRpin_PIN & _BV(IRpin)) {
+#     if defined(BUILD_LED_BLINK)
       ledOff();
+#     endif
       hp++;
       delayMicroseconds(RESOLUTION);
       if (((hp >= MAXPULSE) && (pulse != 0)) || (pulse == NUMPULSES))
@@ -247,7 +258,9 @@ uint16_t listenForIR() {
     pulses[pulse][0] = hp;
 
     while (!(IRpin_PIN & _BV(IRpin))) {
+#     if defined(BUILD_LED_BLINK)
       ledOff();
+#     endif
       lp++;
       delayMicroseconds(RESOLUTION);
       if (((lp >= MAXPULSE) && (pulse != 0)) || (pulse == NUMPULSES))
@@ -260,9 +273,12 @@ uint16_t listenForIR() {
   }
 }
 
+
+#if defined(BUILD_LED_BLINK)
 static inline void ledOff() {
     if (isLedLight && ((millis() - lastPress) > 500)) {
       digitalWrite(LEDpin, false);
       isLedLight = false;
     }
 }
+#endif

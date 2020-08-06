@@ -1,5 +1,5 @@
 /*
-  VLC/Media player IR Remote for PC (Windows 10/Linux)
+  VLC/Media player IR Remote for PC (Windows 10)
   Project for ATtiny85 USB stick + TL1838 IR Receiver Module
   TrinketHidCombo library: https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketHidCombo
 
@@ -22,11 +22,14 @@
   - PC wakeup - GREEN button,
   - exit full screen mode (ESC)
 
+  If you notice braking when quickly sequentially pressing keys - comment out the line BUILD_LED_BLINK
 */
 
 #include <TrinketHidCombo.h>
 
+/* Comment next line for not use sound volume and mute on PC */
 #define BUILD_SOUND_CTRL 1
+/* Comment next line for not use blinking LED on key press */
 #define BUILD_LED_BLINK 1
 
 #define IRpin_PIN PINB

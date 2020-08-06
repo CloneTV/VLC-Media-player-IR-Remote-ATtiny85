@@ -26,9 +26,9 @@
 */
 
 /* Comment next line for not use sound volume and mute on PC */
-// #define BUILD_SOUND_CTRL 1
+#define BUILD_SOUND_CTRL 1
 /* Comment next line for not use blinking LED on key press */
-// #define BUILD_LED_BLINK 1
+#define BUILD_LED_BLINK 1
 
 #include <TrinketHidCombo.h>
 #include "IRCodeSkylineRemote.h"

@@ -14,7 +14,7 @@
   - previous/next track,
   - play/pause/stop,
   - PAD support: right, left, up, down, ok
-  - change volume,
+  - change volume, mute,
   - menu - Menu button,
   - change player type: VLC or standard Windows 10 Media player - BLUE button (VLC default),
   - print screen - YELLOW button,
@@ -25,6 +25,8 @@
 */
 
 #include <TrinketHidCombo.h>
+
+#define BUILD_SOUND_CTRL 1
 
 #define IRpin_PIN PINB
 #define IRpin 2
@@ -90,6 +92,7 @@ void loop()
   }
   int repeat = ((irCode != irCodeLast) || ((millis() - lastPress) > 200));
   switch (irCode) {
+#   if defined(BUILD_SOUND_CTRL)
     case IR_MUTE: {
       if(repeat)
         TrinketHidCombo.pressMultimediaKey(MMKEY_MUTE);
@@ -103,6 +106,7 @@ void loop()
       TrinketHidCombo.pressMultimediaKey(MMKEY_VOL_DOWN);
       break;
     }
+#   endif
     case IR_PLAY: {
       if(repeat)
         TrinketHidCombo.pressMultimediaKey(MMKEY_PLAYPAUSE);

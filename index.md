@@ -3,6 +3,7 @@
  This project for `ATtiny85` USB stick + `TL1838` IR Receiver Module or compatible.  
  The stick can be controlled from the `Skyline TV` remote control and others with a similar remote control, VLC player or standard Media Player on Windows 10.  
  No software required for Windows 10 or special drivers.
+ IR Remote for **PC**, **Linux**, **Android**, **Mac**(?), tested on Windows 10.
 
 ## Features and Capabilities:
 
@@ -25,7 +26,7 @@
 - [TrinketHidCombo Adafruit library](https://github.com/CloneTV/VLC-Media-player-IR-Remote-ATtiny85/tree/master/lib)  
 - [TrinketKeyboard Adafruit library](https://github.com/CloneTV/VLC-Media-player-IR-Remote-ATtiny85/tree/master/lib)  
 - `TrinketKeyboard` library required only for build [`IR Scanner`](https://github.com/CloneTV/VLC-Media-player-IR-Remote-ATtiny85/blob/master/src/IR-Scanner-ATtiny85.ino) part.
-- IR Remote for **PC**, **Linux**, **Android**, **Mac**(?), tested on Windows 10.
+- IR Remote control from TV or another, required `NEC` protocol.
 
 ## Skyline TV remote:
 

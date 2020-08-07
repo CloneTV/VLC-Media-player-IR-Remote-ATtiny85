@@ -17,7 +17,7 @@
   - change volume, mute,
   - menu - Menu button,
   - change player type: VLC or standard Windows 10 Media player - BLUE button (VLC default),
-  - print screen - YELLOW button,
+  - print screen - YELLOW button or On/Off IR receive command,
   - PC sleep - RED button,
   - PC wakeup - GREEN button,
   - exit full screen mode (ESC)
@@ -39,7 +39,7 @@
 // #include "IRCodeChinaNoNameRemote.h" /* special things :) */
 
 #define IRpin_PIN PINB
-#define IRpin 2
+#define IRpin  2
 #define LEDpin 1
 
 #define MAXPULSE    5000
@@ -59,15 +59,20 @@ unsigned long lastPress = 0UL;
 bool isVlcPlayer = true;
 
 #if defined(BUILD_ONOFF_IR)
+#  define IR_ISENABLE() irIsEnable()
    bool isIrOn = true;
+#else
+#  define IR_ISENABLE()
 #endif
 
 #if defined(BUILD_LED_BLINK)
+#  define LED_ON() isLedLight = true
 #  define LED_OFF() ledOff()
 #  define LED_CHECK() ledCheck()
 #  define LED_TRIGGER() ledTrigger()
    bool isLedLight = false;
 #else
+#  define LED_ON()
 #  define LED_OFF()
 #  define LED_CHECK()
 #  define LED_TRIGGER()
@@ -76,16 +81,19 @@ bool isVlcPlayer = true;
 void setup() {
   pinMode(LEDpin, OUTPUT);
   pinMode(IRpin, INPUT);
+# if defined(BUILD_ONOFF_IR)
+  digitalWrite(LEDpin, isIrOn);
+# endif
   TrinketHidCombo.begin();
 }
 
 void loop()
 {
   TrinketHidCombo.poll();
-#if defined(BUILD_LED_BLINK)
-  isLedLight = true;
-#endif
-
+  
+  IR_ISENABLE();
+  LED_ON();
+  
   uint16_t numpulse = listenForIR();
   for (int i = 0; i < 32; i++) {
     irCode = irCode << 1;
@@ -265,6 +273,7 @@ uint16_t listenForIR() {
   }
 }
 
+
 #if defined(BUILD_LED_BLINK)
 static inline void ledCheck() {
     if (isLedLight && ((millis() - lastPress) > 500)) {
@@ -279,7 +288,14 @@ static inline void ledTrigger() {
     digitalWrite(LEDpin, false);
 }
 static inline void ledOff() {
-      if (digitalRead(LEDpin))
-        isLedLight = false;
+  if (digitalRead(LEDpin))
+    isLedLight = false;
+}
+#endif
+
+#if defined(BUILD_ONOFF_IR)
+static inline void irIsEnable() {
+  if (!isIrOn)
+    return;
 }
 #endif

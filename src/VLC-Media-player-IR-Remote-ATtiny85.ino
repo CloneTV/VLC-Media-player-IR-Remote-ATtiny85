@@ -59,7 +59,7 @@ unsigned long lastPress = 0UL;
 bool isVlcPlayer = true;
 
 #if defined(BUILD_ONOFF_IR)
-#  define IR_ISENABLE() irIsEnable()
+#  define IR_ISENABLE() if (!isIrOn) return
    bool isIrOn = true;
 #else
 #  define IR_ISENABLE()
@@ -290,12 +290,5 @@ static inline void ledTrigger() {
 static inline void ledOff() {
   if (digitalRead(LEDpin))
     isLedLight = false;
-}
-#endif
-
-#if defined(BUILD_ONOFF_IR)
-static inline void irIsEnable() {
-  if (!isIrOn)
-    return;
 }
 #endif

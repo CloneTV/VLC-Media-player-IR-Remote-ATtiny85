@@ -2,7 +2,7 @@
 
  This project for `ATtiny85` USB stick + `TL1838` IR Receiver Module or compatible.  
  The stick can be controlled from the `Skyline TV` remote control and others with a similar remote control, VLC player or standard Media Player on Windows 10.  
- No software required for Windows 10 or special drivers.
+ No software required for Windows 10 or special drivers.  
  IR Remote USB stick for **PC**, **Linux**, **Android**, **Mac**(?), tested on Windows 10.
  
 ## Features and Capabilities:

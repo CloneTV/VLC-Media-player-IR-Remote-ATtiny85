@@ -32,14 +32,14 @@
 /* Comment next line for not use On/Off on press YELLOW button.
  * This will activate the ScreenShot function.
  */
-#define BUILD_ONOFF_IR 1
+// #define BUILD_ONOFF_IR 1
 
 #include <TrinketHidCombo.h>
 #include "IRCodeSkylineRemote.h"
 // #include "IRCodeChinaNoNameRemote.h" /* special things :) */
 
 #define IRpin_PIN PINB
-#define IRpin  2
+#define IRpin 2
 #define LEDpin 1
 
 #define MAXPULSE    5000
@@ -59,10 +59,12 @@ unsigned long lastPress = 0UL;
 bool isVlcPlayer = true;
 
 #if defined(BUILD_ONOFF_IR)
-#  define IR_ISENABLE() if (!isIrOn) return
+#  define IR_ISENABLE() if ((!isIrOn) && (irCode != IR_YELLOW)) return
+#  define IR_ENABLE_ON() digitalWrite(LEDpin, isIrOn)
    bool isIrOn = true;
 #else
 #  define IR_ISENABLE()
+#  define IR_ENABLE_ON()
 #endif
 
 #if defined(BUILD_LED_BLINK)
@@ -81,17 +83,13 @@ bool isVlcPlayer = true;
 void setup() {
   pinMode(LEDpin, OUTPUT);
   pinMode(IRpin, INPUT);
-# if defined(BUILD_ONOFF_IR)
-  digitalWrite(LEDpin, isIrOn);
-# endif
+  IR_ENABLE_ON();
   TrinketHidCombo.begin();
 }
 
 void loop()
 {
   TrinketHidCombo.poll();
-  
-  IR_ISENABLE();
   LED_ON();
   
   uint16_t numpulse = listenForIR();
@@ -103,6 +101,8 @@ void loop()
       irCode |= 1;
     }
   }
+  
+  IR_ISENABLE();
   int repeat = ((irCode != irCodeLast) || ((millis() - lastPress) > 200));
   switch (irCode) {
 #   if defined(BUILD_SOUND_CTRL)

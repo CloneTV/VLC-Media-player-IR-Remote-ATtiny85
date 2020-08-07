@@ -1,3 +1,6 @@
+![attiny85 VLC media player logo](attiny85-vlc-player-logo.png)
+
+
 # VLC/Media player IR Remote - homemade usb stick
 
  This project for `ATtiny85` USB stick + `TL1838` IR Receiver Module or compatible.  

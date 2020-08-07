@@ -29,9 +29,14 @@
 #define BUILD_SOUND_CTRL 1
 /* Comment next line for not use blinking LED on key press */
 #define BUILD_LED_BLINK 1
+/* Comment next line for not use On/Off on press YELLOW button.
+ * This will activate the ScreenShot function.
+ */
+#define BUILD_ONOFF_IR 1
 
 #include <TrinketHidCombo.h>
 #include "IRCodeSkylineRemote.h"
+// #include "IRCodeChinaNoNameRemote.h" /* special things :) */
 
 #define IRpin_PIN PINB
 #define IRpin 2
@@ -52,8 +57,20 @@ uint32_t irCode = 0U,
          irCodeLast = 0U;
 unsigned long lastPress = 0UL;
 bool isVlcPlayer = true;
+
+#if defined(BUILD_ONOFF_IR)
+   bool isIrOn = true;
+#endif
+
 #if defined(BUILD_LED_BLINK)
-bool isLedLight = false;
+#  define LED_OFF() ledOff()
+#  define LED_CHECK() ledCheck()
+#  define LED_TRIGGER() ledTrigger()
+   bool isLedLight = false;
+#else
+#  define LED_OFF()
+#  define LED_CHECK()
+#  define LED_TRIGGER()
 #endif
 
 void setup() {
@@ -182,8 +199,13 @@ void loop()
     }
     case IR_YELLOW: {
       if(repeat) {
+#       if defined(BUILD_ONOFF_IR)
+        isIrOn = !isIrOn;
+        digitalWrite(LEDpin, isIrOn);
+#       else
         TrinketHidCombo.pressKey(0,KEYCODE_PRINTSCREEN);
         TrinketHidCombo.pressKey(0,0); 
+#       endif
       }
       break;
     }
@@ -202,20 +224,11 @@ void loop()
       break;
     }
     default: {
-#     if defined(BUILD_LED_BLINK)
-      if (digitalRead(LEDpin))
-        isLedLight = false;
-#     endif
+      LED_OFF();
       break;
     }
   }
-#if defined(BUILD_LED_BLINK)
-  if (isLedLight)
-    digitalWrite(LEDpin, true);
-  else
-    digitalWrite(LEDpin, false);
-#endif
-
+  LED_TRIGGER();
   irCodeLast = irCode;
   lastPress = millis();
 }
@@ -228,9 +241,7 @@ uint16_t listenForIR() {
   while (true) {
     uint32_t hp = 0U, lp = 0U;
     while (IRpin_PIN & _BV(IRpin)) {
-#     if defined(BUILD_LED_BLINK)
-      ledOff();
-#     endif
+      LED_CHECK();
       hp++;
       delayMicroseconds(RESOLUTION);
       if (((hp >= MAXPULSE) && (pulse != 0)) || (pulse == NUMPULSES))
@@ -241,9 +252,7 @@ uint16_t listenForIR() {
     pulses[pulse][0] = hp;
 
     while (!(IRpin_PIN & _BV(IRpin))) {
-#     if defined(BUILD_LED_BLINK)
-      ledOff();
-#     endif
+      LED_CHECK();
       lp++;
       delayMicroseconds(RESOLUTION);
       if (((lp >= MAXPULSE) && (pulse != 0)) || (pulse == NUMPULSES))
@@ -256,12 +265,21 @@ uint16_t listenForIR() {
   }
 }
 
-
 #if defined(BUILD_LED_BLINK)
-static inline void ledOff() {
+static inline void ledCheck() {
     if (isLedLight && ((millis() - lastPress) > 500)) {
       digitalWrite(LEDpin, false);
       isLedLight = false;
     }
+}
+static inline void ledTrigger() {
+  if (isLedLight)
+    digitalWrite(LEDpin, true);
+  else
+    digitalWrite(LEDpin, false);
+}
+static inline void ledOff() {
+      if (digitalRead(LEDpin))
+        isLedLight = false;
 }
 #endif

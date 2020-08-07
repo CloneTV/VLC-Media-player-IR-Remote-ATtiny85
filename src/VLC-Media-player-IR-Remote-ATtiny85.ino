@@ -282,10 +282,7 @@ static inline void ledCheck() {
     }
 }
 static inline void ledTrigger() {
-  if (isLedLight)
-    digitalWrite(LEDpin, true);
-  else
-    digitalWrite(LEDpin, false);
+  digitalWrite(LEDpin, isLedLight);
 }
 static inline void ledOff() {
   if (digitalRead(LEDpin))

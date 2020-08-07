@@ -1,7 +1,4 @@
-![attiny85 VLC media player logo](attiny85-vlc-player-logo.png)
-
-
-# VLC/Media player IR Remote - homemade usb stick
+![VLC/Media player IR Remote - homemade usb stick](attiny85-vlc-player-logo.png)  
 
  This project for `ATtiny85` USB stick + `TL1838` IR Receiver Module or compatible.  
  The stick can be controlled from the `Skyline TV` remote control and others with a similar remote control, VLC player or standard Media Player on Windows 10.  

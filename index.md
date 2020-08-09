@@ -17,7 +17,8 @@
 - print screen (`YELLOW` button) or `On`/`Off` `IR` receive command,
 - PC wakeup (`GREEN` button),
 - PC sleep (`RED` button),
-- exit full screen mode (`ESC`)
+- exit full screen mode (`ESC`),
+- keeps state On/Off IR receiver and player type.
 
 ## Required:
 

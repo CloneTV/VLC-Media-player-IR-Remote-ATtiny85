@@ -1,5 +1,5 @@
 /*
-  VLC/Media player IR Remote for PC (Windows 10)
+  VLC/Media player IR Remote for PC (Windows 10, Linux, Android, Mac)
   Project for ATtiny85 USB stick + TL1838 IR Receiver Module
   TrinketHidCombo library: https://github.com/adafruit/Adafruit-Trinket-USB/tree/master/TrinketHidCombo
 
@@ -34,6 +34,7 @@
  */
 // #define BUILD_ONOFF_IR 1
 
+#include <EEPROM.h>
 #include <TrinketHidCombo.h>
 #include "IRCodeSkylineRemote.h"
 // #include "IRCodeChinaNoNameRemote.h" /* special things :) */
@@ -51,27 +52,32 @@
 #define MMKEY_PREV_TRACK  0xB5
 #define MMKEY_NEXT_TRACK  0xB6
 
+#define EEP_ENABLE (byte)3
+#define EEP_DISABLE (byte)4
+#define EEP_ADDR_ONOF 0
+#define EEP_ADDR_PLAYER 1
+
 uint16_t pulse = 0,
          pulses[NUMPULSES][2];
 uint32_t irCode = 0U,
          irCodeLast = 0U;
 unsigned long lastPress = 0UL;
-bool isVlcPlayer = true;
+bool isVlcPlayer;
 
 #if defined(BUILD_ONOFF_IR)
 #  define IR_ISENABLE() if ((!isIrOn) && (irCode != IR_YELLOW)) return
-#  define IR_ENABLE_ON() digitalWrite(LEDpin, isIrOn)
-   bool isIrOn = true;
+#  define IR_ENABLE_LED() digitalWrite(LEDpin, isIrOn)
+   bool isIrOn;
 #else
 #  define IR_ISENABLE()
-#  define IR_ENABLE_ON()
+#  define IR_ENABLE_LED()
 #endif
 
 #if defined(BUILD_LED_BLINK)
 #  define LED_ON() isLedLight = true
-#  define LED_OFF() ledOff()
+#  define LED_OFF() if (digitalRead(LEDpin)) isLedLight = false
 #  define LED_CHECK() ledCheck()
-#  define LED_TRIGGER() ledTrigger()
+#  define LED_TRIGGER() digitalWrite(LEDpin, isLedLight)
    bool isLedLight = false;
 #else
 #  define LED_ON()
@@ -83,8 +89,10 @@ bool isVlcPlayer = true;
 void setup() {
   pinMode(LEDpin, OUTPUT);
   pinMode(IRpin, INPUT);
-  IR_ENABLE_ON();
   TrinketHidCombo.begin();
+  isIrOn = epprom_get(EEP_ADDR_ONOF, true);
+  isVlcPlayer = epprom_get(EEP_ADDR_PLAYER, true);
+  IR_ENABLE_LED();
 }
 
 void loop()
@@ -202,6 +210,7 @@ void loop()
     case IR_BLUE: {
       if(repeat) {
         isVlcPlayer = !isVlcPlayer;
+        epprom_set(EEP_ADDR_PLAYER, isVlcPlayer);
       }
       break;
     }
@@ -210,6 +219,7 @@ void loop()
 #       if defined(BUILD_ONOFF_IR)
         isIrOn = !isIrOn;
         digitalWrite(LEDpin, isIrOn);
+        epprom_set(EEP_ADDR_ONOF, isIrOn);
 #       else
         TrinketHidCombo.pressKey(0,KEYCODE_PRINTSCREEN);
         TrinketHidCombo.pressKey(0,0); 
@@ -273,6 +283,16 @@ uint16_t listenForIR() {
   }
 }
 
+static inline bool epprom_get(int addr, bool b) {
+  switch(EEPROM.read(addr)) {
+    case EEP_ENABLE: return true;
+    case EEP_DISABLE: return false;
+    default: return b;
+  }
+}
+static inline void epprom_set(int addr, bool b) {
+  EEPROM.write(addr, ((b) ? EEP_ENABLE : EEP_DISABLE));
+}
 
 #if defined(BUILD_LED_BLINK)
 static inline void ledCheck() {
@@ -280,12 +300,5 @@ static inline void ledCheck() {
       digitalWrite(LEDpin, false);
       isLedLight = false;
     }
-}
-static inline void ledTrigger() {
-  digitalWrite(LEDpin, isLedLight);
-}
-static inline void ledOff() {
-  if (digitalRead(LEDpin))
-    isLedLight = false;
 }
 #endif

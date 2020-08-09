@@ -66,10 +66,12 @@ bool isVlcPlayer;
 
 #if defined(BUILD_ONOFF_IR)
 #  define IR_ISENABLE() if ((!isIrOn) && (irCode != IR_YELLOW)) return
+#  define IR_SET_LAST() isIrOn = epprom_get(EEP_ADDR_ONOF, true)
 #  define IR_ENABLE_LED() digitalWrite(LEDpin, isIrOn)
    bool isIrOn;
 #else
 #  define IR_ISENABLE()
+#  define IR_SET_LAST()
 #  define IR_ENABLE_LED()
 #endif
 
@@ -86,12 +88,14 @@ bool isVlcPlayer;
 #  define LED_TRIGGER()
 #endif
 
+#define PLAYER_SET_LAST() isVlcPlayer = epprom_get(EEP_ADDR_PLAYER, true)
+
 void setup() {
   pinMode(LEDpin, OUTPUT);
   pinMode(IRpin, INPUT);
   TrinketHidCombo.begin();
-  isIrOn = epprom_get(EEP_ADDR_ONOF, true);
-  isVlcPlayer = epprom_get(EEP_ADDR_PLAYER, true);
+  PLAYER_SET_LAST();
+  IR_SET_LAST();
   IR_ENABLE_LED();
 }
 

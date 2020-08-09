@@ -20,7 +20,8 @@
   - print screen - YELLOW button or On/Off IR receive command,
   - PC sleep - RED button,
   - PC wakeup - GREEN button,
-  - exit full screen mode (ESC)
+  - exit full screen mode (ESC),
+  - keeps state On/Off IR receiver and player type.
 
   If you notice braking when quickly sequentially pressing keys - comment out the line BUILD_LED_BLINK
 */
